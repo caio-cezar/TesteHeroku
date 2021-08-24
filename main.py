@@ -9,10 +9,16 @@ conn = psycopg2.connect(dbname = DB_NAME, user = DB_USER, password = DB_PASS, ho
 
 cur = conn.cursor()
 
-cur.execute('SELECT * FROM pessoas')
+cur.execute('INSERT INTO pessoas (nome) VALUES(%s)', ("Luciano",))
 
-print(cur.fetchall())
+conn.commit()
 
 cur.close()
 
 conn.close()
+
+# print(cur.fetchall())
+
+# cur.close()
+
+# conn.close()
