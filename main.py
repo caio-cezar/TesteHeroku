@@ -1,12 +1,18 @@
-from selenium import webdriver
-import os
+DB_HOST = 'ec2-3-237-55-151.compute-1.amazonaws.com'
+DB_NAME = 'd82oi9svhlh6ha'
+DB_USER = 'bogtpylknervrq'
+DB_PASS = '49bff7d96b31cfcffd7c0f7417c5e8c313c4161f8626274a4dc69139f40280f9'
 
-chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--disable-dev-shm-usage")
-chrome_options.add_argument("--no-sandbox")
-chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-driver.get("https://medium.com")
-print(driver.page_source)
-print("Finished!!!")
+import psycopg2
+
+conn = psycopg2.connect(dbname = DB_NAME, user = DB_USER, password = DB_PASS, host = DB_HOST)
+
+cur = conn.cursor()
+
+cur.execute('SELECT * FROM pessoas')
+
+print(cur.fetchall())
+
+cur.close()
+
+conn.close()
